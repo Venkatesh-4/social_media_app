@@ -164,15 +164,20 @@ export async function createPost(post: INewPost) {
 // ============================== UPLOAD FILE
 export async function uploadFile(file: File) {
   try {
+    console.log("Attempting to upload file:", file.name);
+    console.log("Using storage ID:", appwriteConfig.storageId);
+
     const uploadedFile = await storage.createFile(
       appwriteConfig.storageId,
       ID.unique(),
       file
     );
 
+    console.log("File uploaded successfully:", uploadedFile);
     return uploadedFile;
   } catch (error) {
-    console.log(error);
+    console.error("Error uploading file:", error);
+    throw error;
   }
 }
 
